@@ -6,7 +6,7 @@ from pathlib import Path
 from clubsandwich.blt.nice_terminal import terminal
 from clubsandwich.director import DirectorLoop
 
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT, BATTLE_WIDTH, BATTLE_HEIGHT, LEVEL_OFFSET, SPACESHIP_OFFSET_5x4, \
+from utils import SCREEN_WIDTH, SCREEN_HEIGHT, BATTLE_WIDTH, BATTLE_HEIGHT, LEVEL_OFFSET, SPACESHIP_OFFSET_5x4, \
     FONT_OFFSET
 
 GAME_ROOT = Path(os.path.abspath(sys.path[1]))

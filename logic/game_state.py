@@ -3,7 +3,7 @@ import random
 
 from clubsandwich.geom import Point, Rect
 
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH, BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, PLAYER_SPEED
+from utils import SCREEN_HEIGHT, SCREEN_WIDTH, BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, PLAYER_SPEED
 from logic.enemies import Enemy, dropper_prototype, random_prototype, fast_dropper_prototype
 
 FIRE_LAG = 40

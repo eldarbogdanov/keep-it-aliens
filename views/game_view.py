@@ -2,7 +2,7 @@ import random
 
 from clubsandwich.ui import View, Point, Rect
 
-from constants import BATTLE_HEIGHT, BATTLE_WIDTH
+from utils import BATTLE_HEIGHT, BATTLE_WIDTH
 
 bullet = """XXX
 XXX

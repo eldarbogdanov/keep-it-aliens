@@ -2,7 +2,7 @@ import random
 
 from clubsandwich.geom import Size, Point
 
-from constants import SPACESHIP_OFFSET_5x4, SPACESHIP_OFFSET_6x5, BATTLE_WIDTH
+from utils import SPACESHIP_OFFSET_5x4, SPACESHIP_OFFSET_6x5, BATTLE_WIDTH
 
 
 class Enemy(object):

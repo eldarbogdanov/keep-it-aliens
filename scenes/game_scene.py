@@ -1,6 +1,7 @@
-from clubsandwich.ui import UIScene, terminal, WindowView, LayoutOptions
+from clubsandwich.ui import UIScene, terminal, WindowView, LayoutOptions, LabelView
 
-from constants import BULLET_SPEED, SCREEN_WIDTH, BATTLE_WIDTH
+import utils
+from utils import BULLET_SPEED, SCREEN_WIDTH, BATTLE_WIDTH
 from logic.game_state import GameState
 from views.game_view import GameView
 
@@ -12,18 +13,31 @@ from views.info_view import InfoView
 pr = cProfile.Profile()
 pr.enable()
 
+controls = """
+Movement:
+Left/Right
+
+Shooting:
+A, S, D
+"""
 
 class GameScene(UIScene):
     def __init__(self, *args, **kwargs):
         self.game_state = GameState()
         self.info_view = InfoView(self.game_state)
+        controls_view = LabelView(
+            utils.translate_text(controls),
+            align_horz="left",
+            layout_options=LayoutOptions.column_right(SCREEN_WIDTH - BATTLE_WIDTH - 2).with_updates(top=50)
+        )
         views = [
             GameView(self.game_state),
             WindowView(
                 "",
                 subviews=[self.info_view],
                 layout_options=LayoutOptions.column_right(SCREEN_WIDTH - BATTLE_WIDTH)
-            )
+            ),
+            controls_view
         ]
         super().__init__(views=views, *args, **kwargs)
 
