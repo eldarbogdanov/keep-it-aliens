@@ -1,5 +1,6 @@
 from clubsandwich.ui import UIScene, terminal
 
+from constants import BULLET_SPEED
 from logic.game_state import GameState
 from views.game_view import GameView
 
@@ -22,7 +23,11 @@ class GameScene(UIScene):
             self.game_state.move_left()
         if val == terminal.TK_RIGHT:
             self.game_state.move_right()
-        if val == terminal.TK_SPACE:
-            self.game_state.fire(0, -1)
+        if val == terminal.TK_A:
+            self.game_state.fire(-BULLET_SPEED, -BULLET_SPEED)
+        if val == terminal.TK_S:
+            self.game_state.fire(0, -BULLET_SPEED)
+        if val == terminal.TK_D:
+            self.game_state.fire(BULLET_SPEED, -BULLET_SPEED)
         if val == terminal.TK_ESCAPE:
             pr.dump_stats("profile")

@@ -1,9 +1,10 @@
+import copy
 import random
 
 from clubsandwich.geom import Point, Rect
 
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH, BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH
-from logic.enemies import Enemy
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH, BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, PLAYER_SPEED
+from logic.enemies import Enemy, dropper_prototype, random_prototype, fast_dropper_prototype
 
 FIRE_LAG = 40
 
@@ -11,6 +12,7 @@ FIRE_LAG = 40
 class GameState(object):
     def __init__(self):
         self.level = 1
+        self.allowed_enemies = [dropper_prototype, random_prototype, fast_dropper_prototype]
         self.counter = 0
         self.escaped_enemies = 0
         self.living_enemies = []
@@ -32,7 +34,6 @@ class GameState(object):
                 if enemy_rect.contains(pos) or enemy_rect.contains(mid_pos) or enemy_rect.contains(new_pos):
                     print("Bullet at pos {}, new_pos {} destroyed enemy {}".format(pos, new_pos, enemy_rect))
                     destroyed_enemies.add(enemy)
-                    # I'm gonna assume no two enemies can be hit by the same bullet simultaneously
                     used = True
             if not used and new_pos.y >= 0:
                 new_bullets.append((pos, speed))
@@ -41,13 +42,12 @@ class GameState(object):
         return destroyed_enemies
 
     def process_one_frame(self):
-        print(self.counter, self.bullets)
         self.counter += 1
         new_living_enemies = []
         destroyed_enemies = self._check_bullet_enemy_collision()
 
         for enemy, pos in self.living_enemies:
-            new_pos = pos + Point(0, enemy.speed)
+            new_pos = pos + enemy.next_move(pos)
             if new_pos.y >= ALIEN_FINISH:
                 self.escaped_enemies += 1
             else:
@@ -74,13 +74,13 @@ class GameState(object):
         self.next_available_fire += FIRE_LAG
 
     def move_left(self):
-        self.player_pos = self.player_pos + Point(-1, 0)
+        self.player_pos = self.player_pos + Point(-PLAYER_SPEED, 0)
 
     def move_right(self):
-        self.player_pos = self.player_pos + Point(1, 0)
+        self.player_pos = self.player_pos + Point(PLAYER_SPEED, 0)
 
     def _add_enemy(self):
-        type = Enemy.random()
+        type = copy.deepcopy(random.choice(self.allowed_enemies))
         candidates = []
         for x in range(SCREEN_WIDTH - type.size.width):
             proposed_rect = Rect(origin=Point(x, 0), size=type.size)

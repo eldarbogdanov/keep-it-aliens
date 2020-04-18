@@ -29,7 +29,6 @@ class GameView(View):
             ctx.print(self.rounded_point(pos), enemy.char)
         ctx.color("red")
         for pos, _ in self.game_state.bullets:
-            print("Drawing at {}",format(self.rounded_point(pos)))
             ctx.print(self.rounded_point(pos), bullet)
 
     def rounded_point(self, point):
