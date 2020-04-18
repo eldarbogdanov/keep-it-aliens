@@ -1,20 +1,21 @@
 #!/usr/local/bin/python3
 import os
 import sys
-import time
 from pathlib import Path
 
 from clubsandwich.blt.nice_terminal import terminal
 from clubsandwich.director import DirectorLoop
 
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT, BATTLE_WIDTH, BATTLE_HEIGHT, LEVEL_OFFSET, SPACESHIP_OFFSET_5x4
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, BATTLE_WIDTH, BATTLE_HEIGHT, LEVEL_OFFSET, SPACESHIP_OFFSET_5x4, \
+    FONT_OFFSET
 
 GAME_ROOT = Path(os.path.abspath(sys.path[1]))
 
 from scenes.game_scene import GameScene
 
 SCREEN_SIZE = "{}x{}".format(SCREEN_WIDTH, SCREEN_HEIGHT)
-DEFAULT_FONT_SIZE = "6x6"
+TILE_SIZE = "6x6"
+FONT_SIZE = "12x18"
 FONT = "{root}/assets/NotoMono-Regular.ttf".format(root=GAME_ROOT)
 SPACESHIP_TILESET = "{root}/assets/spaceships.png".format(root=GAME_ROOT)
 OTHER_TILESET = "{root}/assets/SF.png".format(root=GAME_ROOT)
@@ -37,8 +38,10 @@ class GameLoop(DirectorLoop):
         terminal.set("""
     window.title=Keep it Ali...ens!;
     window.size={window_size};
-    font: {font}, size={font_size};
-    """.format(window_size=SCREEN_SIZE, font=FONT, font_size=DEFAULT_FONT_SIZE))
+    font: {font}, size={tile_size};
+    """.format(window_size=SCREEN_SIZE, font=FONT, tile_size=TILE_SIZE))
+
+        terminal.set("{}: {}, size={}, spacing=2x3".format(FONT_OFFSET, FONT, FONT_SIZE))
 
     def get_initial_scene(self):
         return GameScene()

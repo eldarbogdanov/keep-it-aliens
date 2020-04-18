@@ -12,9 +12,12 @@ FIRE_LAG = 40
 class GameState(object):
     def __init__(self):
         self.level = 1
+        self.level_name = "San Francisco"
         self.allowed_enemies = [dropper_prototype, random_prototype, fast_dropper_prototype]
         self.counter = 0
+        self.frames_left = 80 * 60
         self.escaped_enemies = 0
+        self.escaped_enemies_limit = 10
         self.living_enemies = []
         self.bullets = []
         self.next_available_fire = 0
@@ -43,6 +46,7 @@ class GameState(object):
 
     def process_one_frame(self):
         self.counter += 1
+        self.frames_left -= 1
         new_living_enemies = []
         destroyed_enemies = self._check_bullet_enemy_collision()
 
