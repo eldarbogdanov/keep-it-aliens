@@ -8,7 +8,7 @@ from clubsandwich.director import DirectorLoop
 
 from logic.game_state import GameState
 from utils import SCREEN_WIDTH, SCREEN_HEIGHT, BATTLE_WIDTH, BATTLE_HEIGHT, LEVEL_OFFSET, VEHICLE_OFFSET_5x4, \
-    FONT_OFFSET
+    FONT_OFFSET, VEHICLE_OFFSET_6x5, COMMAND_SHIP_OFFSET
 
 GAME_ROOT = Path(os.path.abspath(sys.path[1]))
 # GAME_ROOT = Path("/Users/eldarbogdanov/sandbox/aliens/")
@@ -21,8 +21,10 @@ FONT_SIZE = "12x18"
 FONT = "{root}/assets/NotoMono-Regular.ttf".format(root=GAME_ROOT)
 VEHICLE_5x4_TILESET = "{root}/assets/5x4 vehicles.png".format(root=GAME_ROOT)
 VEHICLE_6x5_TILESET = "{root}/assets/6x5 vehicles.png".format(root=GAME_ROOT)
+COMMAND_SHIP_TILESET = "{root}/assets/command ship.png".format(root=GAME_ROOT)
 SF_TILESET = "{root}/assets/SF.png".format(root=GAME_ROOT)
 NY_TILESET = "{root}/assets/NY.png".format(root=GAME_ROOT)
+DC_TILESET = "{root}/assets/DC.png".format(root=GAME_ROOT)
 SCENE_DIMENSIONS = "{}x{}".format(BATTLE_WIDTH, BATTLE_HEIGHT)
 SCENE_SIZE = "{}x{}".format(BATTLE_WIDTH * 6, BATTLE_HEIGHT * 6)
 
@@ -34,13 +36,21 @@ class GameLoop(DirectorLoop):
         terminal.set("{}: {}, size={}, align=center, spacing={}".format(
             LEVEL_OFFSET, SF_TILESET, SCENE_SIZE, SCENE_DIMENSIONS
         ))
-
         terminal.set("{}: {}, size={}, align=center, spacing={}".format(
             LEVEL_OFFSET + 1, NY_TILESET, SCENE_SIZE, SCENE_DIMENSIONS
+        ))
+        terminal.set("{}: {}, size={}, align=center, spacing={}".format(
+            LEVEL_OFFSET + 2, DC_TILESET, SCENE_SIZE, SCENE_DIMENSIONS
         ))
 
         terminal.set("{}: {}, size=60x48, align=center, spacing=10x8".format(
             VEHICLE_OFFSET_5x4, VEHICLE_5x4_TILESET
+        ))
+        terminal.set("{}: {}, size=72x60, align=center, spacing=12x10".format(
+            VEHICLE_OFFSET_6x5, VEHICLE_6x5_TILESET
+        ))
+        terminal.set("{}: {}, size=108x84, align=center, spacing=18x12".format(
+            COMMAND_SHIP_OFFSET, COMMAND_SHIP_TILESET
         ))
 
         terminal.set("""

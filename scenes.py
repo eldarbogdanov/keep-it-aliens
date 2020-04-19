@@ -53,11 +53,11 @@ class GameScene(UIScene):
         if val == terminal.TK_RIGHT:
             self.game_state.move_right()
         if val == terminal.TK_A:
-            self.game_state.fire(-BULLET_SPEED, -BULLET_SPEED)
+            self.game_state.fire_left()
         if val == terminal.TK_S:
-            self.game_state.fire(0, -BULLET_SPEED)
+            self.game_state.fire()
         if val == terminal.TK_D:
-            self.game_state.fire(BULLET_SPEED, -BULLET_SPEED)
+            self.game_state.fire_right()
         if val == terminal.TK_ESCAPE:
             pr.dump_stats("profile")
 

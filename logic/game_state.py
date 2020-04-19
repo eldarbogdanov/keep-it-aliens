@@ -3,13 +3,14 @@ import random
 
 from clubsandwich.geom import Point, Rect
 
-from utils import BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, PLAYER_SPEED, VEHICLE_OFFSET_5x4
+from utils import BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, PLAYER_SPEED, VEHICLE_OFFSET_5x4, BULLET_SPEED
 from logic.enemies import dropper_prototype, random_prototype, fast_dropper_prototype, strong_dropper_prototype, \
-    strong_random_prototype, dreadnought_prototype
+    strong_random_prototype, dreadnought_prototype, command_ship_prototype
 
-FIRE_LAG = 40
-FRAMES_PER_LEVEL = 1 * 60
-
+FIRE_LAG = 20
+FPS = 72
+FRAMES_PER_LEVEL = FPS * 20
+FINAL_BOSS_FRAMES_LEFT = FPS * 6
 
 class GameState(object):
     def __init__(self):
@@ -32,7 +33,7 @@ class GameState(object):
         self.escaped_enemies = 0
         self.escaped_enemies_limit = 10
         self.counter = 0
-        self.frames_left = FRAMES_PER_LEVEL
+        self.frames_left = 5 if self.level < 3 else FRAMES_PER_LEVEL
         self.player_pos = self.starting_position()
 
     def level_name(self):
@@ -52,15 +53,14 @@ class GameState(object):
             return [strong_dropper_prototype, strong_random_prototype, dreadnought_prototype]
 
     def player_char(self):
-        if self.level == 2:
-            return chr(VEHICLE_OFFSET_5x4 + 4)
-        return chr(VEHICLE_OFFSET_5x4 + 3)
+        return chr(VEHICLE_OFFSET_5x4 + self.level + 2)
 
     def starting_position(self):
         if self.level == 1:
             return Point(BATTLE_WIDTH / 2, BATTLE_HEIGHT - 14)
         if self.level == 2:
             return Point(BATTLE_WIDTH / 2, BATTLE_HEIGHT - 9)
+        return Point(BATTLE_WIDTH / 2, BATTLE_HEIGHT - 9)
 
     def _check_bullet_enemy_collision(self):
         # returns the set of destroyed enemies, modifies self.bullets
@@ -75,7 +75,9 @@ class GameState(object):
                 enemy_rect = Rect(origin=enemy_pos, size=enemy.size)
                 if enemy_rect.contains(pos) or enemy_rect.contains(mid_pos) or enemy_rect.contains(new_pos):
                     print("Bullet at pos {}, new_pos {} destroyed enemy {}".format(pos, new_pos, enemy_rect))
-                    destroyed_enemies.add(enemy)
+                    enemy.hp -= 1
+                    if enemy.hp <= 0:
+                        destroyed_enemies.add(enemy)
                     used = True
             if not used and new_pos.y >= 0:
                 new_bullets.append((pos, speed))
@@ -93,6 +95,8 @@ class GameState(object):
             new_pos = pos + enemy.next_move(pos)
             if new_pos.y >= ALIEN_FINISH:
                 self.escaped_enemies += 1
+                if enemy.deadly:
+                    self.escaped_enemies += 100
             else:
                 new_living_enemies.append((enemy, new_pos))
         self.living_enemies = new_living_enemies
@@ -106,16 +110,28 @@ class GameState(object):
         if add_enemy:
             self._add_enemy()
 
+        if self.level == 3 and self.frames_left == FINAL_BOSS_FRAMES_LEFT:
+            self.living_enemies.append((command_ship_prototype, Point(BATTLE_WIDTH / 2, 0)))
+
         return destroyed_enemies
 
     def is_valid_position(self, pos):
         return pos.x >= 0 and pos.x < BATTLE_WIDTH and pos.y >= 0 and pos.y < BATTLE_HEIGHT
 
-    def fire(self, dx, dy):
+    def _inner_fire(self, dx, dy):
         if self.next_available_fire > self.counter:
             return False
         self.bullets.append((self.player_pos + Point(4, 0), Point(dx, dy)))
         self.next_available_fire += FIRE_LAG
+
+    def fire(self):
+        self._inner_fire(0, -BULLET_SPEED)
+
+    def fire_left(self):
+        self._inner_fire(-BULLET_SPEED / 2, -BULLET_SPEED)
+
+    def fire_right(self):
+        self._inner_fire(BULLET_SPEED / 2, -BULLET_SPEED)
 
     def move_left(self):
         self.player_pos = self.player_pos + Point(-PLAYER_SPEED, 0)

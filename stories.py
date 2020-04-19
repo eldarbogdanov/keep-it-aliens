@@ -42,16 +42,18 @@ thought they were a serious threat before anyone called
 them a serious threat.
 
 Commander Quill, your final mission is to prevent the
-alien dreadnoughts from descending upon the White House. 
+alien command ship from descending upon the White House. 
 """
 
 win = """
-Hooray! You have succeeded in averting a catastrophe
-and sent them aliens back where they belong. In recognition
-of your heroic effort, you are being awarded the Medal of
-Honor. At the ceremony, the acting President violently 
-shakes your hand and keeps telling the press how he
-personally recommended you for the job.
+Hooray! You have succeeded in averting a catastrophe by
+destroying the enemy command ship. And oh wow, Nazi aliens
+- who could have thought!!
+
+In recognition of your heroic effort, you are being
+awarded the Medal of Honor. At the ceremony, the acting
+President violently  shakes your hand and keeps telling
+the press how he personally recommended you for the job.
 
 
                         The End
