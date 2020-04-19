@@ -52,4 +52,4 @@ dropper_prototype = Enemy(chr(VEHICLE_OFFSET_5x4 + 2), Size(10, 8), 1, "down", 1
 strong_random_prototype = Enemy(chr(VEHICLE_OFFSET_6x5), Size(12, 10), 2, "random", 3, 0.2)
 strong_dropper_prototype = Enemy(chr(VEHICLE_OFFSET_6x5 + 1), Size(12, 10), 2, "down", 2, 0.2)
 dreadnought_prototype = Enemy(chr(VEHICLE_OFFSET_6x5 + 2), Size(12, 10), 3, "random", 5, 0.25)
-command_ship_prototype = Enemy(chr(COMMAND_SHIP_OFFSET), Size(18, 14), 10, "random", 100, 0.2, deadly=True)
+command_ship_prototype = Enemy(chr(COMMAND_SHIP_OFFSET), Size(18, 14), 15, "random", 100, 0.2, deadly=True)

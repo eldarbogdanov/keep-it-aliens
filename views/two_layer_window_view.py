@@ -1,4 +1,6 @@
-from clubsandwich.ui import WindowView
+from clubsandwich.ui import WindowView, Point
+
+from utils import BACKGROUND_OFFSET
 
 
 class TwoLayerWindowView(WindowView):
@@ -11,3 +13,4 @@ class TwoLayerWindowView(WindowView):
         ctx.layer(0)
         ctx.clear_area(self.bounds)
         super().draw(ctx)
+        ctx.print(Point(0, 0), chr(BACKGROUND_OFFSET))

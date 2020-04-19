@@ -20,6 +20,7 @@ class GameState(object):
         self.last_enemy = None
         self.living_enemies = None
         self.bullets = None
+        self.deadly_destroyed = None
         self.next_available_fire = None
         self.escaped_enemies = None
         self.escaped_enemies_limit = None
@@ -34,6 +35,7 @@ class GameState(object):
         self.bullets = []
         self.last_enemy = 0
         self.next_available_fire = 0
+        self.deadly_destroyed = False
         self.escaped_enemies = 0
         self.escaped_enemies_limit = ESCAPED_ENEMIES_LIMIT
         self.counter = 0
@@ -81,6 +83,8 @@ class GameState(object):
                     enemy.hp -= 1
                     if enemy.hp <= 0:
                         self.score += enemy.score
+                        if enemy.deadly:
+                            self.deadly_destroyed = True
                         destroyed_enemies.add(enemy)
                     used = True
             if not used and new_pos.y >= 0:
@@ -161,7 +165,7 @@ class GameState(object):
             self.living_enemies.append((type, Point(x, 0)))
 
     def finished(self):
-        return self.frames_left <= 0 or self.escaped_enemies > self.escaped_enemies_limit
+        return self.frames_left <= 0 or self.escaped_enemies > self.escaped_enemies_limit or self.deadly_destroyed
 
     def lost(self):
         return self.escaped_enemies > self.escaped_enemies_limit

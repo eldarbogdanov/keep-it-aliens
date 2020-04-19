@@ -72,7 +72,7 @@ class CutScene(UIScene):
     def __init__(self, game_state, *args, **kwargs):
         self.game_state = game_state
         if self.game_state.finished() and self.game_state.lost():
-            text = stories.fail
+            text = stories.fail.format(game_state.score)
         elif self.game_state.level == 1 and not self.game_state.finished():
             text = stories.first
         elif self.game_state.level == 1 and self.game_state.finished():
@@ -80,7 +80,7 @@ class CutScene(UIScene):
         elif self.game_state.level == 2:
             text = stories.third
         elif self.game_state.level == 3:
-            text = stories.win
+            text = stories.win.format(game_state.score)
         else:
             assert False, "Should never get here"
 
@@ -90,7 +90,6 @@ class CutScene(UIScene):
                 LabelView(
                     utils.translate_text(text),
                     align_horz="left",
-                    color_fg="red",
                     layout_options=LayoutOptions().with_updates(top=5, height=9, bottom=None)
                 ),
                 ButtonView(
@@ -100,7 +99,7 @@ class CutScene(UIScene):
                 )
             ],
             # color_bg="red",
-            # clear=True,
+            clear=True,
             layout_options=LayoutOptions().with_updates(left=15, right=15, top=40, bottom=40)
         )
         super().__init__(views=[prompt], *args, **kwargs)

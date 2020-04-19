@@ -55,9 +55,7 @@ awarded the Medal of Honor. At the ceremony, the acting
 President violently  shakes your hand and keeps telling
 the press how he personally recommended you for the job.
 
-
-                        The End
-
+Final score: {}
 """
 
 fail = """
@@ -70,4 +68,6 @@ the now-former President of the United States. As Commander
 Quill organized the remaining humans into a resistance
 movement, the President secured his own survival by selling
 out the resistance to the aliens.
+
+Final score: {}
 """
