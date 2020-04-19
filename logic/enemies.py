@@ -23,7 +23,7 @@ class Enemy(object):
             if self.streak:
                 ret = self.streak["point"]
                 # don't let it go beyond battlefield bounds
-                if current_point.x < 1 and ret.x < 0 or current_point.x > BATTLE_WIDTH - 1 and ret.x > 0:
+                if current_point.x < 1 and ret.x < 0 or current_point.x > BATTLE_WIDTH - 1 - self.size.width and ret.x > 0:
                     self.streak = None
                     return Point(self.speed * (1 if current_point.x < 1 else -1), self.speed)
                 if self.streak["moves"] == 1:

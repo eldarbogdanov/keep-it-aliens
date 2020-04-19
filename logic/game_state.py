@@ -3,7 +3,7 @@ import random
 
 from clubsandwich.geom import Point, Rect
 
-from utils import SCREEN_HEIGHT, SCREEN_WIDTH, BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, PLAYER_SPEED
+from utils import BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, PLAYER_SPEED
 from logic.enemies import dropper_prototype, random_prototype, fast_dropper_prototype, strong_dropper_prototype, \
     strong_random_prototype, dreadnought_prototype
 
@@ -90,6 +90,7 @@ class GameState(object):
 
         self.bullets = [(pos + speed, speed) for pos, speed in self.bullets if self.is_valid_position(pos)]
 
+        # increase the chance as time passes?
         add_enemy = random.randint(1, 80) == 1
         if add_enemy:
             self._add_enemy()
@@ -97,7 +98,7 @@ class GameState(object):
         return destroyed_enemies
 
     def is_valid_position(self, pos):
-        return pos.x >= 0 and pos.x < SCREEN_WIDTH and pos.y >= 0 and pos.y < SCREEN_HEIGHT
+        return pos.x >= 0 and pos.x < BATTLE_WIDTH and pos.y >= 0 and pos.y < BATTLE_HEIGHT
 
     def fire(self, dx, dy):
         if self.next_available_fire > self.counter:
@@ -114,7 +115,7 @@ class GameState(object):
     def _add_enemy(self):
         type = copy.deepcopy(random.choice(self.allowed_enemies()))
         candidates = []
-        for x in range(SCREEN_WIDTH - type.size.width):
+        for x in range(BATTLE_WIDTH - type.size.width):
             proposed_rect = Rect(origin=Point(x, 0), size=type.size)
             good = True
             for enemy, pos in self.living_enemies:

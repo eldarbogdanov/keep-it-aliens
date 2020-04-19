@@ -2,7 +2,7 @@ import random
 
 from clubsandwich.ui import View, Point, Rect
 
-from utils import BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH
+from utils import BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, LEVEL_OFFSET
 
 bullet = """XXX
 XXX
@@ -20,7 +20,7 @@ class GameView(View):
         if self.have_drawn < 2:
             ctx.layer(0)
             ctx.clear_area(self.bounds)
-            ctx.print(Point(0, 0), chr(0x1000 * self.game_state.level))
+            ctx.print(Point(0, 0), chr(LEVEL_OFFSET + self.game_state.level - 1))
             ctx.print(Point(0, ALIEN_FINISH), "—" * BATTLE_WIDTH)
             self.have_drawn += 1
 

@@ -20,8 +20,9 @@ TILE_SIZE = "6x6"
 FONT_SIZE = "12x18"
 FONT = "{root}/assets/NotoMono-Regular.ttf".format(root=GAME_ROOT)
 SPACESHIP_TILESET = "{root}/assets/spaceships.png".format(root=GAME_ROOT)
-OTHER_TILESET = "{root}/assets/SF.png".format(root=GAME_ROOT)
-SCENE_DIMENSIONS = "{}x{}".format(SCREEN_WIDTH, SCREEN_HEIGHT)
+SF_TILESET = "{root}/assets/SF.png".format(root=GAME_ROOT)
+NY_TILESET = "{root}/assets/NY.png".format(root=GAME_ROOT)
+SCENE_DIMENSIONS = "{}x{}".format(BATTLE_WIDTH, BATTLE_HEIGHT)
 SCENE_SIZE = "{}x{}".format(BATTLE_WIDTH * 6, BATTLE_HEIGHT * 6)
 
 
@@ -30,8 +31,12 @@ class GameLoop(DirectorLoop):
         super().terminal_init()
 
         terminal.set("{}: {}, size={}, align=center, spacing={}".format(
-            LEVEL_OFFSET, OTHER_TILESET, SCENE_SIZE, SCENE_DIMENSIONS
+            LEVEL_OFFSET, SF_TILESET, SCENE_SIZE, SCENE_DIMENSIONS
         ))
+
+        # terminal.set("{}: {}, size={}, align=center, spacing={}".format(
+        #     LEVEL_OFFSET + 1, NY_TILESET, SCENE_SIZE, SCENE_DIMENSIONS
+        # ))
 
         terminal.set("{}: {}, size=60x48, align=center, spacing=10x8".format(
             SPACESHIP_OFFSET_5x4, SPACESHIP_TILESET

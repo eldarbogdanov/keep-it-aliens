@@ -33,7 +33,10 @@ class GameScene(UIScene):
             layout_options=LayoutOptions.column_right(SCREEN_WIDTH - BATTLE_WIDTH - 2).with_updates(top=50)
         )
         views = [
-            GameView(self.game_state),
+            GameView(
+                self.game_state,
+                layout_options=LayoutOptions().column_left(width=BATTLE_WIDTH)
+            ),
             WindowView(
                 "",
                 subviews=[self.info_view],
