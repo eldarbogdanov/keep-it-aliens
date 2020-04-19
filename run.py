@@ -6,12 +6,14 @@ from pathlib import Path
 from clubsandwich.blt.nice_terminal import terminal
 from clubsandwich.director import DirectorLoop
 
+from logic.game_state import GameState
 from utils import SCREEN_WIDTH, SCREEN_HEIGHT, BATTLE_WIDTH, BATTLE_HEIGHT, LEVEL_OFFSET, SPACESHIP_OFFSET_5x4, \
     FONT_OFFSET
 
 GAME_ROOT = Path(os.path.abspath(sys.path[1]))
+# GAME_ROOT = Path("/Users/eldarbogdanov/sandbox/aliens/")
 
-from scenes.game_scene import GameScene
+from scenes import GameScene, CutScene
 
 SCREEN_SIZE = "{}x{}".format(SCREEN_WIDTH, SCREEN_HEIGHT)
 TILE_SIZE = "6x6"
@@ -36,7 +38,7 @@ class GameLoop(DirectorLoop):
         ))
 
         terminal.set("""
-    window.title=Keep it Ali...ens!;
+    window.title=Keep it Ali...ens!!!;
     window.size={window_size};
     font: {font}, size={tile_size};
     """.format(window_size=SCREEN_SIZE, font=FONT, tile_size=TILE_SIZE))
@@ -44,7 +46,8 @@ class GameLoop(DirectorLoop):
         terminal.set("{}: {}, size={}, spacing=2x3".format(FONT_OFFSET, FONT, FONT_SIZE))
 
     def get_initial_scene(self):
-        return GameScene()
+        game_state = GameState()
+        return CutScene(game_state)
 
 
 if __name__ == '__main__':

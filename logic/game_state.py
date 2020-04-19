@@ -4,24 +4,52 @@ import random
 from clubsandwich.geom import Point, Rect
 
 from utils import SCREEN_HEIGHT, SCREEN_WIDTH, BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, PLAYER_SPEED
-from logic.enemies import Enemy, dropper_prototype, random_prototype, fast_dropper_prototype
+from logic.enemies import dropper_prototype, random_prototype, fast_dropper_prototype, strong_dropper_prototype, \
+    strong_random_prototype, dreadnought_prototype
 
 FIRE_LAG = 40
+FRAMES_PER_LEVEL = 10 * 60
 
 
 class GameState(object):
     def __init__(self):
-        self.level = 1
-        self.level_name = "San Francisco"
-        self.allowed_enemies = [dropper_prototype, random_prototype, fast_dropper_prototype]
-        self.counter = 0
-        self.frames_left = 80 * 60
-        self.escaped_enemies = 0
-        self.escaped_enemies_limit = 10
+        self.level = 0
+        self.living_enemies = None
+        self.bullets = None
+        self.next_available_fire = None
+        self.escaped_enemies = None
+        self.escaped_enemies_limit = None
+        self.counter = None
+        self.frames_left = None
+        self.player_pos = None
+        self.advance_to_next_level()
+
+    def advance_to_next_level(self):
+        self.level += 1
         self.living_enemies = []
         self.bullets = []
         self.next_available_fire = 0
+        self.escaped_enemies = 0
+        self.escaped_enemies_limit = 10
+        self.counter = 0
+        self.frames_left = FRAMES_PER_LEVEL
         self.player_pos = Point(BATTLE_WIDTH / 2, BATTLE_HEIGHT - 10)
+
+    def level_name(self):
+        if self.level == 1:
+            return "San Francisco"
+        if self.level == 2:
+            return "New York"
+        if self.level == 3:
+            return "Washington, DC"
+
+    def allowed_enemies(self):
+        if self.level == 1:
+            return [dropper_prototype, random_prototype, fast_dropper_prototype]
+        if self.level == 2:
+            return [fast_dropper_prototype, strong_dropper_prototype, strong_random_prototype]
+        if self.level == 3:
+            return [strong_dropper_prototype, strong_random_prototype, dreadnought_prototype]
 
     def _check_bullet_enemy_collision(self):
         # returns the set of destroyed enemies, modifies self.bullets
@@ -84,7 +112,7 @@ class GameState(object):
         self.player_pos = self.player_pos + Point(PLAYER_SPEED, 0)
 
     def _add_enemy(self):
-        type = copy.deepcopy(random.choice(self.allowed_enemies))
+        type = copy.deepcopy(random.choice(self.allowed_enemies()))
         candidates = []
         for x in range(SCREEN_WIDTH - type.size.width):
             proposed_rect = Rect(origin=Point(x, 0), size=type.size)
@@ -98,3 +126,9 @@ class GameState(object):
         if candidates:
             x = random.choice(candidates)
             self.living_enemies.append((type, Point(x, 0)))
+
+    def finished(self):
+        return self.frames_left <= 0
+
+    def lost(self):
+        return self.escaped_enemies > self.escaped_enemies_limit

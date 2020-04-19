@@ -8,18 +8,22 @@ bullet = """XXX
 XXX
 XXX"""
 
+
 class GameView(View):
     def __init__(self, game_state, *args, **kwargs):
         self.game_state = game_state
-        self.have_drawn = False
+        self.have_drawn = 0
         super().__init__(*args, **kwargs)
 
     def draw(self, ctx):
-        self.game_state.process_one_frame()
-        if not self.have_drawn:
+        # for some reason the first time this is invoked, it doesn't render the background as expected
+        if self.have_drawn < 2:
             ctx.layer(0)
+            ctx.clear_area(self.bounds)
             ctx.print(Point(0, 0), chr(0x1000 * self.game_state.level))
-            self.have_drawn = True
+            self.have_drawn += 1
+
+        self.game_state.process_one_frame()
 
         ctx.layer(1)
         ctx.clear_area(self.bounds)

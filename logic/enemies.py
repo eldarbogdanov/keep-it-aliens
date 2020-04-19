@@ -48,3 +48,5 @@ dropper_prototype = Enemy(chr(SPACESHIP_OFFSET_5x4), Size(10, 8), 1, "down", 0.2
 random_prototype = Enemy(chr(SPACESHIP_OFFSET_5x4 + 1), Size(10, 8), 1, "random", 0.2)
 fast_dropper_prototype = Enemy(chr(SPACESHIP_OFFSET_5x4 + 2), Size(10, 8), 1, "down", 0.4)
 strong_dropper_prototype = Enemy(chr(SPACESHIP_OFFSET_6x5), Size(12, 10), 2, "down", 0.2)
+strong_random_prototype = Enemy(chr(SPACESHIP_OFFSET_6x5 + 1), Size(12, 10), 2, "random", 0.2)
+dreadnought_prototype = Enemy(chr(SPACESHIP_OFFSET_6x5 + 2), Size(12, 10), 3, "random", 0.3)
