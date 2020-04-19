@@ -47,8 +47,8 @@ alien command ship from descending upon the White House.
 
 win = """
 Hooray! You have succeeded in averting a catastrophe by
-destroying the enemy command ship. And oh wow, Nazi aliens
-- who could have thought!!
+destroying the enemy command ship. And oh wow, the aliens
+turned out to be Nazis - who could have guessed!
 
 In recognition of your heroic effort, you are being
 awarded the Medal of Honor. At the ceremony, the acting
@@ -64,7 +64,10 @@ fail = """
 In spite of your valiant attempts, the aliens managed to
 infiltrate the population. Unable to tell friend from foe,
 the human race was slowly eradicated and farmed for juice.
-The now-former President of the United States secured his
-survival by selling out the remaining human resistance to
-the aliens.
+
+The last chapter of the alien invasion was co-written by 
+the now-former President of the United States. As Commander
+Quill organized the remaining humans into a resistance
+movement, the President secured his own survival by selling
+out the resistance to the aliens.
 """

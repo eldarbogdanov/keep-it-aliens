@@ -2,7 +2,7 @@ import random
 
 from clubsandwich.ui import View, Point, Rect
 
-from utils import BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, LEVEL_OFFSET
+from utils import BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, LEVEL_OFFSET, BULLET_OFFSET
 
 bullet = """
 @@
@@ -38,9 +38,19 @@ class GameView(View):
             ctx.print(self.rounded_point(pos), enemy.char)
         # ctx.color("red")
         for pos, _ in self.game_state.bullets:
-            ctx.print(self.rounded_point(pos), bullet)
+            ctx.print(self.rounded_point(pos), chr(BULLET_OFFSET))
 
         ctx.layer(0)
 
     def rounded_point(self, point):
-        return Point(round(point.x), round(point.y))
+        x = round(point.x)
+        y = round(point.y)
+        if x < 0:
+            x = 0
+        if x >= BATTLE_WIDTH:
+            x = BATTLE_WIDTH - 1
+        if y < 0:
+            y = 0
+        if y >= BATTLE_HEIGHT:
+            y = BATTLE_HEIGHT - 1
+        return Point(x, y)

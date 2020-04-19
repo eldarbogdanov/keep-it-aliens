@@ -8,7 +8,7 @@ from clubsandwich.director import DirectorLoop
 
 from logic.game_state import GameState
 from utils import SCREEN_WIDTH, SCREEN_HEIGHT, BATTLE_WIDTH, BATTLE_HEIGHT, LEVEL_OFFSET, VEHICLE_OFFSET_5x4, \
-    FONT_OFFSET, VEHICLE_OFFSET_6x5, COMMAND_SHIP_OFFSET
+    FONT_OFFSET, VEHICLE_OFFSET_6x5, COMMAND_SHIP_OFFSET, BULLET_OFFSET
 
 GAME_ROOT = Path(os.path.abspath(sys.path[1]))
 # GAME_ROOT = Path("/Users/eldarbogdanov/sandbox/aliens/")
@@ -22,6 +22,7 @@ FONT = "{root}/assets/NotoMono-Regular.ttf".format(root=GAME_ROOT)
 VEHICLE_5x4_TILESET = "{root}/assets/5x4 vehicles.png".format(root=GAME_ROOT)
 VEHICLE_6x5_TILESET = "{root}/assets/6x5 vehicles.png".format(root=GAME_ROOT)
 COMMAND_SHIP_TILESET = "{root}/assets/command ship.png".format(root=GAME_ROOT)
+BULLET_TILESET = "{root}/assets/bullet.png".format(root=GAME_ROOT)
 SF_TILESET = "{root}/assets/SF.png".format(root=GAME_ROOT)
 NY_TILESET = "{root}/assets/NY.png".format(root=GAME_ROOT)
 DC_TILESET = "{root}/assets/DC.png".format(root=GAME_ROOT)
@@ -32,6 +33,10 @@ SCENE_SIZE = "{}x{}".format(BATTLE_WIDTH * 6, BATTLE_HEIGHT * 6)
 class GameLoop(DirectorLoop):
     def terminal_init(self):
         super().terminal_init()
+
+        terminal.set("{}: {}, size=12x12, align=center, spacing=2x2".format(
+            BULLET_OFFSET, BULLET_TILESET, SCENE_SIZE, SCENE_DIMENSIONS
+        ))
 
         terminal.set("{}: {}, size={}, align=center, spacing={}".format(
             LEVEL_OFFSET, SF_TILESET, SCENE_SIZE, SCENE_DIMENSIONS

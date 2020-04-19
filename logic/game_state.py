@@ -48,7 +48,7 @@ class GameState(object):
         if self.level == 1:
             return [dropper_prototype, random_prototype, fast_dropper_prototype]
         if self.level == 2:
-            return [fast_dropper_prototype, strong_dropper_prototype, strong_random_prototype]
+            return [dropper_prototype, strong_dropper_prototype, strong_random_prototype]
         if self.level == 3:
             return [strong_dropper_prototype, strong_random_prototype, dreadnought_prototype]
 
@@ -74,7 +74,6 @@ class GameState(object):
             for enemy, enemy_pos in self.living_enemies:
                 enemy_rect = Rect(origin=enemy_pos, size=enemy.size)
                 if enemy_rect.contains(pos) or enemy_rect.contains(mid_pos) or enemy_rect.contains(new_pos):
-                    print("Bullet at pos {}, new_pos {} destroyed enemy {}".format(pos, new_pos, enemy_rect))
                     enemy.hp -= 1
                     if enemy.hp <= 0:
                         destroyed_enemies.add(enemy)
