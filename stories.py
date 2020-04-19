@@ -52,7 +52,7 @@ turned out to be Nazis - who could have guessed!
 
 In recognition of your heroic effort, you are being
 awarded the Medal of Honor. At the ceremony, the acting
-President violently  shakes your hand and keeps telling
+President violently shakes your hand and keeps telling
 the press how he personally recommended you for the job.
 
 Final score: {}

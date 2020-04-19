@@ -13,6 +13,7 @@ FRAMES_PER_LEVEL = FPS * 60  # 1 minute
 FINAL_BOSS_FRAMES_LEFT = FPS * 6
 ESCAPED_ENEMIES_LIMIT = 10
 
+
 class GameState(object):
     def __init__(self):
         self.level = 0
