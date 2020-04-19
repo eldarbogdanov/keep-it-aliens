@@ -2,7 +2,7 @@ SCREEN_WIDTH = 150
 SCREEN_HEIGHT = 140
 BATTLE_WIDTH = 120
 BATTLE_HEIGHT = SCREEN_HEIGHT
-SPACESHIP_OFFSET_5x4 = 0x0500
+VEHICLE_OFFSET_5x4 = 0x0500
 SPACESHIP_OFFSET_6x5 = 0x0600
 FONT_OFFSET = 0x4000
 LEVEL_OFFSET = 0x1000
@@ -21,5 +21,4 @@ def translate_text(s):
             ret += "\n\n\n"
         else:
             ret += "".join([chr(ord(c) + FONT_OFFSET) for c in line])
-    print(s, ret)
     return ret

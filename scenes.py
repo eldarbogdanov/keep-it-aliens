@@ -10,6 +10,7 @@ from views.game_view import GameView
 import cProfile
 
 from views.info_view import InfoView
+from views.two_layer_window_view import TwoLayerWindowView
 
 pr = cProfile.Profile()
 pr.enable()
@@ -62,9 +63,9 @@ class GameScene(UIScene):
 
     def terminal_update(self, is_active=False):
         super().terminal_update()
+        self.info_view.update()
         if self.game_state.finished():
             self.director.replace_scene(CutScene(self.game_state))
-        self.info_view.update()
 
 
 class CutScene(UIScene):
@@ -83,20 +84,23 @@ class CutScene(UIScene):
         else:
             assert False, "Should never get here"
 
-        prompt = WindowView(
+        prompt = TwoLayerWindowView(
             "",
             subviews=[
                 LabelView(
                     utils.translate_text(text),
                     align_horz="left",
+                    color_fg="red",
                     layout_options=LayoutOptions().with_updates(top=5, height=9, bottom=None)
                 ),
                 ButtonView(
-                    "OK",
+                    OK,
                     callback=self.callback,
-                    layout_options=LayoutOptions.row_bottom(1)
+                    layout_options=LayoutOptions.row_bottom(8)
                 )
             ],
+            # color_bg="red",
+            # clear=True,
             layout_options=LayoutOptions().with_updates(left=15, right=15, top=40, bottom=40)
         )
         super().__init__(views=[prompt], *args, **kwargs)
@@ -109,3 +113,11 @@ class CutScene(UIScene):
         else:
             self.game_state.advance_to_next_level()
             self.director.replace_scene(GameScene(self.game_state))
+
+
+OK = """
+ @@   @  @
+@  @  @ @ 
+@  @  @@  
+@  @  @ @ 
+ @@   @  @"""

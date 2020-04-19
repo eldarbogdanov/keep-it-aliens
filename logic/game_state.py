@@ -3,7 +3,7 @@ import random
 
 from clubsandwich.geom import Point, Rect
 
-from utils import BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, PLAYER_SPEED
+from utils import BATTLE_HEIGHT, BATTLE_WIDTH, ALIEN_FINISH, PLAYER_SPEED, VEHICLE_OFFSET_5x4
 from logic.enemies import dropper_prototype, random_prototype, fast_dropper_prototype, strong_dropper_prototype, \
     strong_random_prototype, dreadnought_prototype
 
@@ -33,7 +33,7 @@ class GameState(object):
         self.escaped_enemies_limit = 10
         self.counter = 0
         self.frames_left = FRAMES_PER_LEVEL
-        self.player_pos = Point(BATTLE_WIDTH / 2, BATTLE_HEIGHT - 10)
+        self.player_pos = self.starting_position()
 
     def level_name(self):
         if self.level == 1:
@@ -50,6 +50,17 @@ class GameState(object):
             return [fast_dropper_prototype, strong_dropper_prototype, strong_random_prototype]
         if self.level == 3:
             return [strong_dropper_prototype, strong_random_prototype, dreadnought_prototype]
+
+    def player_char(self):
+        if self.level == 2:
+            return chr(VEHICLE_OFFSET_5x4 + 4)
+        return chr(VEHICLE_OFFSET_5x4 + 3)
+
+    def starting_position(self):
+        if self.level == 1:
+            return Point(BATTLE_WIDTH / 2, BATTLE_HEIGHT - 14)
+        if self.level == 2:
+            return Point(BATTLE_WIDTH / 2, BATTLE_HEIGHT - 9)
 
     def _check_bullet_enemy_collision(self):
         # returns the set of destroyed enemies, modifies self.bullets
@@ -103,7 +114,7 @@ class GameState(object):
     def fire(self, dx, dy):
         if self.next_available_fire > self.counter:
             return False
-        self.bullets.append((self.player_pos, Point(dx, dy)))
+        self.bullets.append((self.player_pos + Point(4, 0), Point(dx, dy)))
         self.next_available_fire += FIRE_LAG
 
     def move_left(self):

@@ -7,7 +7,7 @@ from clubsandwich.blt.nice_terminal import terminal
 from clubsandwich.director import DirectorLoop
 
 from logic.game_state import GameState
-from utils import SCREEN_WIDTH, SCREEN_HEIGHT, BATTLE_WIDTH, BATTLE_HEIGHT, LEVEL_OFFSET, SPACESHIP_OFFSET_5x4, \
+from utils import SCREEN_WIDTH, SCREEN_HEIGHT, BATTLE_WIDTH, BATTLE_HEIGHT, LEVEL_OFFSET, VEHICLE_OFFSET_5x4, \
     FONT_OFFSET
 
 GAME_ROOT = Path(os.path.abspath(sys.path[1]))
@@ -19,7 +19,8 @@ SCREEN_SIZE = "{}x{}".format(SCREEN_WIDTH, SCREEN_HEIGHT)
 TILE_SIZE = "6x6"
 FONT_SIZE = "12x18"
 FONT = "{root}/assets/NotoMono-Regular.ttf".format(root=GAME_ROOT)
-SPACESHIP_TILESET = "{root}/assets/spaceships.png".format(root=GAME_ROOT)
+VEHICLE_5x4_TILESET = "{root}/assets/5x4 vehicles.png".format(root=GAME_ROOT)
+VEHICLE_6x5_TILESET = "{root}/assets/6x5 vehicles.png".format(root=GAME_ROOT)
 SF_TILESET = "{root}/assets/SF.png".format(root=GAME_ROOT)
 NY_TILESET = "{root}/assets/NY.png".format(root=GAME_ROOT)
 SCENE_DIMENSIONS = "{}x{}".format(BATTLE_WIDTH, BATTLE_HEIGHT)
@@ -39,7 +40,7 @@ class GameLoop(DirectorLoop):
         ))
 
         terminal.set("{}: {}, size=60x48, align=center, spacing=10x8".format(
-            SPACESHIP_OFFSET_5x4, SPACESHIP_TILESET
+            VEHICLE_OFFSET_5x4, VEHICLE_5x4_TILESET
         ))
 
         terminal.set("""

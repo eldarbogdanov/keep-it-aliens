@@ -26,7 +26,7 @@ class InfoView(View):
             self.time_view,
             self.aliens_landed
         ]
-        super().__init__(subviews=subviews, *args, **kwargs)
+        super().__init__(subviews=subviews, clear=True, *args, **kwargs)
 
     def update(self):
         self.time_view.text = utils.translate_text("Time left:\n{}s".format(int(self.game_state.frames_left / 80)))
