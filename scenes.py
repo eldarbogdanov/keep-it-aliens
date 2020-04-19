@@ -88,15 +88,16 @@ class CutScene(UIScene):
             subviews=[
                 LabelView(
                     utils.translate_text(text),
-                    layout_options=LayoutOptions().with_updates(top=1, height=9, bottom=None)
+                    align_horz="left",
+                    layout_options=LayoutOptions().with_updates(top=5, height=9, bottom=None)
                 ),
                 ButtonView(
                     "OK",
                     callback=self.callback,
-                    layout_options=LayoutOptions.row_bottom(1).with_updates(right=5)
+                    layout_options=LayoutOptions.row_bottom(1)
                 )
             ],
-            layout_options=LayoutOptions().with_updates(left=42, right=42, top=18, bottom=18)
+            layout_options=LayoutOptions().with_updates(left=15, right=15, top=40, bottom=40)
         )
         super().__init__(views=[prompt], *args, **kwargs)
 

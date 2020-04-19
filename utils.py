@@ -14,8 +14,12 @@ BULLET_SPEED = 2
 # there probably is a better way to load fonts in different size than the tiles
 def translate_text(s):
     ret = ""
-    for line in s.split("\n"):
+    for line in s.splitlines():
         if ret:
             ret += "\n"
-        ret += "".join([chr(ord(c) + FONT_OFFSET) for c in line])
+        if line == "":
+            ret += "\n\n\n"
+        else:
+            ret += "".join([chr(ord(c) + FONT_OFFSET) for c in line])
+    print(s, ret)
     return ret

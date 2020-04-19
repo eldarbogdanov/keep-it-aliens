@@ -34,9 +34,9 @@ class GameLoop(DirectorLoop):
             LEVEL_OFFSET, SF_TILESET, SCENE_SIZE, SCENE_DIMENSIONS
         ))
 
-        # terminal.set("{}: {}, size={}, align=center, spacing={}".format(
-        #     LEVEL_OFFSET + 1, NY_TILESET, SCENE_SIZE, SCENE_DIMENSIONS
-        # ))
+        terminal.set("{}: {}, size={}, align=center, spacing={}".format(
+            LEVEL_OFFSET + 1, NY_TILESET, SCENE_SIZE, SCENE_DIMENSIONS
+        ))
 
         terminal.set("{}: {}, size=60x48, align=center, spacing=10x8".format(
             SPACESHIP_OFFSET_5x4, SPACESHIP_TILESET

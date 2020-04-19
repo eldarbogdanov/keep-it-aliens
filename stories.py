@@ -53,9 +53,9 @@ Honor. At the ceremony, the acting President violently
 shakes your hand and keeps telling the press how he
 personally recommended you for the job.
 
-                        vvvvvvv
+
                         The End
-                        ^^^^^^^
+
 """
 
 fail = """

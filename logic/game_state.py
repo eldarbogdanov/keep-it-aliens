@@ -8,7 +8,7 @@ from logic.enemies import dropper_prototype, random_prototype, fast_dropper_prot
     strong_random_prototype, dreadnought_prototype
 
 FIRE_LAG = 40
-FRAMES_PER_LEVEL = 10 * 60
+FRAMES_PER_LEVEL = 1 * 60
 
 
 class GameState(object):
