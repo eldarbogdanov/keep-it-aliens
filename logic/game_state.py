@@ -9,12 +9,15 @@ from logic.enemies import dropper_prototype, random_prototype, fast_dropper_prot
 
 FIRE_LAG = 20
 FPS = 72
-FRAMES_PER_LEVEL = FPS * 20
+FRAMES_PER_LEVEL = FPS * 60  # 1 minute
 FINAL_BOSS_FRAMES_LEFT = FPS * 6
+ESCAPED_ENEMIES_LIMIT = 10
 
 class GameState(object):
     def __init__(self):
         self.level = 0
+        self.score = 0
+        self.last_enemy = None
         self.living_enemies = None
         self.bullets = None
         self.next_available_fire = None
@@ -29,11 +32,12 @@ class GameState(object):
         self.level += 1
         self.living_enemies = []
         self.bullets = []
+        self.last_enemy = 0
         self.next_available_fire = 0
         self.escaped_enemies = 0
-        self.escaped_enemies_limit = 10
+        self.escaped_enemies_limit = ESCAPED_ENEMIES_LIMIT
         self.counter = 0
-        self.frames_left = 5 if self.level < 3 else FRAMES_PER_LEVEL
+        self.frames_left = FRAMES_PER_LEVEL
         self.player_pos = self.starting_position()
 
     def level_name(self):
@@ -48,7 +52,7 @@ class GameState(object):
         if self.level == 1:
             return [dropper_prototype, random_prototype, fast_dropper_prototype]
         if self.level == 2:
-            return [dropper_prototype, strong_dropper_prototype, strong_random_prototype]
+            return [fast_dropper_prototype, strong_dropper_prototype, strong_random_prototype]
         if self.level == 3:
             return [strong_dropper_prototype, strong_random_prototype, dreadnought_prototype]
 
@@ -76,6 +80,7 @@ class GameState(object):
                 if enemy_rect.contains(pos) or enemy_rect.contains(mid_pos) or enemy_rect.contains(new_pos):
                     enemy.hp -= 1
                     if enemy.hp <= 0:
+                        self.score += enemy.score
                         destroyed_enemies.add(enemy)
                     used = True
             if not used and new_pos.y >= 0:
@@ -105,7 +110,7 @@ class GameState(object):
         self.bullets = [(pos + speed, speed) for pos, speed in self.bullets if self.is_valid_position(pos)]
 
         # increase the chance as time passes?
-        add_enemy = random.randint(1, 80) == 1
+        add_enemy = random.randint(1, 100) == 1 or self.last_enemy < self.counter - FPS * 3
         if add_enemy:
             self._add_enemy()
 
@@ -139,6 +144,7 @@ class GameState(object):
         self.player_pos = self.player_pos + Point(PLAYER_SPEED, 0)
 
     def _add_enemy(self):
+        self.last_enemy = self.counter
         type = copy.deepcopy(random.choice(self.allowed_enemies()))
         candidates = []
         for x in range(BATTLE_WIDTH - type.size.width):
@@ -155,7 +161,7 @@ class GameState(object):
             self.living_enemies.append((type, Point(x, 0)))
 
     def finished(self):
-        return self.frames_left <= 0
+        return self.frames_left <= 0 or self.escaped_enemies > self.escaped_enemies_limit
 
     def lost(self):
         return self.escaped_enemies > self.escaped_enemies_limit

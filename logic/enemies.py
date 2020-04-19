@@ -6,7 +6,7 @@ from utils import VEHICLE_OFFSET_5x4, VEHICLE_OFFSET_6x5, BATTLE_WIDTH, COMMAND_
 
 
 class Enemy(object):
-    def __init__(self, char, size, hp, behavior, speed, deadly=False):
+    def __init__(self, char, size, hp, behavior, score, speed, deadly=False):
         self.id = random.randint(1, 100000)
         self.char = char
         self.hp = hp
@@ -14,6 +14,7 @@ class Enemy(object):
         self.behavior = behavior
         self.speed = speed
         self.deadly = deadly
+        self.score = score
 
         self.streak = None
 
@@ -45,10 +46,10 @@ class Enemy(object):
         return str(self.id)
 
 
-dropper_prototype = Enemy(chr(VEHICLE_OFFSET_5x4), Size(10, 8), 1, "down", 0.2)
-random_prototype = Enemy(chr(VEHICLE_OFFSET_5x4 + 1), Size(10, 8), 1, "random", 0.2)
-fast_dropper_prototype = Enemy(chr(VEHICLE_OFFSET_5x4 + 2), Size(10, 8), 1, "down", 0.4)
-strong_random_prototype = Enemy(chr(VEHICLE_OFFSET_6x5), Size(12, 10), 2, "random", 0.2)
-strong_dropper_prototype = Enemy(chr(VEHICLE_OFFSET_6x5 + 1), Size(12, 10), 2, "down", 0.2)
-dreadnought_prototype = Enemy(chr(VEHICLE_OFFSET_6x5 + 2), Size(12, 10), 3, "random", 0.3)
-command_ship_prototype = Enemy(chr(COMMAND_SHIP_OFFSET), Size(18, 14), 10, "random", 0.3, deadly=True)
+fast_dropper_prototype = Enemy(chr(VEHICLE_OFFSET_5x4 + 0), Size(10, 8), 1, "down", 2, 0.3)
+random_prototype = Enemy(chr(VEHICLE_OFFSET_5x4 + 1), Size(10, 8), 1, "random", 2, 0.2)
+dropper_prototype = Enemy(chr(VEHICLE_OFFSET_5x4 + 2), Size(10, 8), 1, "down", 1, 0.2)
+strong_random_prototype = Enemy(chr(VEHICLE_OFFSET_6x5), Size(12, 10), 2, "random", 3, 0.2)
+strong_dropper_prototype = Enemy(chr(VEHICLE_OFFSET_6x5 + 1), Size(12, 10), 2, "down", 2, 0.2)
+dreadnought_prototype = Enemy(chr(VEHICLE_OFFSET_6x5 + 2), Size(12, 10), 3, "random", 5, 0.25)
+command_ship_prototype = Enemy(chr(COMMAND_SHIP_OFFSET), Size(18, 14), 10, "random", 100, 0.2, deadly=True)
